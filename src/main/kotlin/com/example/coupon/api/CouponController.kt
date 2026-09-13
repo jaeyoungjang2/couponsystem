@@ -10,22 +10,21 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/api/coupons")
 class CouponController(
-    private val couponService: CouponService
+    private val couponService: CouponService,
 ) {
 
-    // 쿠폰 생성
-    @PostMapping()
+    @PostMapping
     fun create(@RequestBody request: CreateCouponRequest): ResponseEntity<CouponResponse> {
         val coupon = couponService.createCoupon(request)
         return ResponseEntity.status(HttpStatus.CREATED).body(CouponResponse.from(coupon))
-
     }
 
-    // 쿠폰 발급
     @PostMapping("/{couponId}/issue")
     fun issue(
         @PathVariable couponId: Long,
