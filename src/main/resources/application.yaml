@@ -20,6 +20,6 @@ spring:
 
 logging:
   level:
-    com.apiece.coupon: DEBUG
+    com.example.coupon: DEBUG
     org.hibernate.SQL: DEBUG
     org.hibernate.orm.jdbc.bind: TRACE
