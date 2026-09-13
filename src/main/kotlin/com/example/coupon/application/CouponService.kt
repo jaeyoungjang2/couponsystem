@@ -18,6 +18,7 @@ class CouponService(
     val couponRepository: CouponRepository,
     val issuanceRepository: IssuanceRepository,
 ) {
+    // 쿠폰 생성
     @Transactional
     fun createCoupon(request: CreateCouponRequest): Coupon {
         val coupon = Coupon(
@@ -29,15 +30,16 @@ class CouponService(
         return couponRepository.save(coupon)
     }
 
-    // 쿠폰 유/무 검증
+    // 쿠폰 발급
     @Transactional
     fun issue(couponId: Long, userId: Long): Issuance {
+        // 존재하는 쿠폰인지 확인
         val coupon = couponRepository.findById(couponId)
             .orElseThrow { CouponNotFoundException() }
 
         val now = LocalDateTime.now()
 
-        // 쿠폰 발행이 가능한 시간인지 확인
+        // 쿠폰 발급이 가능한 시간인지 확인
         if (!coupon.isBookingOpen(now)) {
             throw NotStartedException()
         }
@@ -47,13 +49,14 @@ class CouponService(
             throw SoldOutException()
         }
 
-        // 이미 특정 사용자에게 발행된 적이 있는지 확인
+        // 이미 특정 사용자에게 발급된 적이 있는지 확인
         if (issuanceRepository.existsByUserIdAndCouponId(userId, couponId)) {
             throw AlreadyIssuedException()
         }
 
         coupon.issuedQuantity++
 
+        // 쿠폰 발급
         return issuanceRepository.save(
             Issuance(
                 userId = userId,
