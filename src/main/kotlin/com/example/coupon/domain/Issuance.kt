@@ -8,11 +8,25 @@ import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.Index
 import jakarta.persistence.Table
+import jakarta.persistence.UniqueConstraint
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "issuance")
+@Table(
+    name = "issuance",
+    uniqueConstraints = [
+        UniqueConstraint(
+            name = "uk_issuance_user_coupon",
+            columnNames = ["user_id", "coupon_id"]
+        )
+    ],
+    indexes = [
+        Index(name = "idx_issuance_status", columnList = "status"),
+        Index(name = "idx_issuance_coupon", columnList = "coupon_id"),
+    ]
+)
 class Issuance(
     @Column(nullable = false)
     var userId: Long,
