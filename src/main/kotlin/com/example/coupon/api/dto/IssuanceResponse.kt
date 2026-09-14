@@ -4,6 +4,7 @@ import com.example.coupon.domain.Issuance
 import com.example.coupon.domain.IssuanceStatus
 import java.time.LocalDateTime
 
+
 class IssuanceResponse(
     val id: Long,
     val userId: Long,
@@ -14,7 +15,7 @@ class IssuanceResponse(
     val usedAt: LocalDateTime?,
 ) {
     companion object {
-        fun from(issuance: Issuance): IssuanceResponse = IssuanceResponse(
+        fun from(issuance: Issuance): com.example.coupon.api.dto.IssuanceResponse = com.example.coupon.api.dto.IssuanceResponse(
             id = requireNotNull(issuance.id),
             userId = issuance.userId,
             couponId = issuance.couponId,

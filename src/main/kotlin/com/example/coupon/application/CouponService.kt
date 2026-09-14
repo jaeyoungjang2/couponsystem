@@ -3,6 +3,7 @@ package com.example.coupon.application
 import com.example.coupon.api.dto.CreateCouponRequest
 import com.example.coupon.domain.Coupon
 import com.example.coupon.domain.CouponRepository
+import com.example.coupon.api.dto.IssuanceResponse
 import com.example.coupon.domain.Issuance
 import com.example.coupon.domain.IssuanceRepository
 import com.example.coupon.support.AlreadyIssuedException
@@ -15,8 +16,8 @@ import java.time.LocalDateTime
 
 @Service
 class CouponService(
-    val couponRepository: CouponRepository,
-    val issuanceRepository: IssuanceRepository,
+    private val couponRepository: CouponRepository,
+    private val issuanceRepository: IssuanceRepository,
 ) {
     // 쿠폰 생성
     @Transactional
@@ -58,7 +59,9 @@ class CouponService(
 
         // 쿠폰 발급
         return issuanceRepository.save(
-            Issuance(
+            Issuance
+
+                (
                 userId = userId,
                 couponId = couponId,
                 issuedAt = now,
