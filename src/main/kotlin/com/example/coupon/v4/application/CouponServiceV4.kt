@@ -1,4 +1,4 @@
-package com.example.coupon.v3.application
+package com.example.coupon.v4.application
 
 import com.example.coupon.dto.CreateCouponRequest
 import com.example.coupon.domain.Coupon
@@ -9,15 +9,17 @@ import com.example.coupon.support.AlreadyIssuedException
 import com.example.coupon.support.CouponNotFoundException
 import com.example.coupon.support.NotStartedException
 import com.example.coupon.support.SoldOutException
+import com.example.coupon.v4.infrastructure.messaging.InMemoryIssuanceQueue
+import com.example.coupon.v4.infrastructure.messaging.IssuanceRequested
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
-class CouponServiceV3(
+class CouponServiceV4(
     private val couponRepository: CouponRepository,
-    private val issuanceRepository: IssuanceRepository,
-    private val couponIssuerV3: CouponIssuerV3,
+    private val couponIssuerV4: CouponIssuerV4,
+    private val issuanceQueue: InMemoryIssuanceQueue,
 ) {
     // 쿠폰 생성
     @Transactional
@@ -29,7 +31,7 @@ class CouponServiceV3(
             validityDays = request.validityDays,
             startsAt = request.startsAt,
         ))
-        couponIssuerV3.initStock(coupon.id!!, coupon.totalQuantity)
+        couponIssuerV4.initStock(coupon.id!!, coupon.totalQuantity)
         return coupon
     }
 
@@ -49,31 +51,27 @@ class CouponServiceV3(
             throw NotStartedException()
         }
 
-        // 매진된 쿠폰인지 확인
-        if (coupon.isSoldOut()) {
-            throw SoldOutException()
-        }
-
-        // 이미 특정 사용자에게 발급된 적이 있는지 확인
-        if (issuanceRepository.existsByUserIdAndCouponId(userId, couponId)) {
-            throw AlreadyIssuedException()
-        }
-
         // redis에 사용한 쿠폰 개수 적용
-        couponIssuerV3.tryIsusue(couponId)
+        couponIssuerV4.tryIsusue(couponId, userId)
 
-        couponRepository.incrementIssuedQuantity(couponId)
+        val expiresAt = now.plusSeconds(coupon.validityDays.toLong())
 
-        // 쿠폰 발급
-        return issuanceRepository.save(
-            Issuance
 
-                (
-                userId = userId,
+        issuanceQueue.enqueue(
+            IssuanceRequested(
                 couponId = couponId,
+                userId = userId,
                 issuedAt = now,
-                expiresAt = now.plusDays(coupon.validityDays.toLong()),
+                expiresAt = expiresAt,
             )
+        )
+        println("enqueued issuance")
+
+        return Issuance(
+            userId = userId,
+            couponId = couponId,
+            issuedAt = now,
+            expiresAt = expiresAt,
         )
     }
 }

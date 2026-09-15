@@ -7,7 +7,7 @@ import org.springframework.data.redis.core.script.RedisScript
 import org.springframework.stereotype.Component
 
 @Component
-class CouponIssuer(
+class CouponIssuerV3(
     private val redisTemplate: StringRedisTemplate
 ) {
 

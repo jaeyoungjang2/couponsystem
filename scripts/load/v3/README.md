@@ -4,12 +4,7 @@
 
 - `docker compose up -d` 후 서비스가 8080 응답
 
-```bash
-git checkout <branch>
-./gradlew --stop && ./gradlew jibDockerBuild && docker compose up -d
-```
-
-## v2
+## v3
 
 ```bash
 ./scripts/load/v2/run.sh

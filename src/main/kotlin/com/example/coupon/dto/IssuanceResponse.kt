@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 
 class IssuanceResponse(
-    val id: Long,
+    val id: Long?,
     val userId: Long,
     val couponId: Long,
     val status: IssuanceStatus,
@@ -16,7 +16,7 @@ class IssuanceResponse(
 ) {
     companion object {
         fun from(issuance: Issuance): IssuanceResponse = IssuanceResponse(
-            id = requireNotNull(issuance.id),
+            id = issuance.id,
             userId = issuance.userId,
             couponId = issuance.couponId,
             status = issuance.status,
