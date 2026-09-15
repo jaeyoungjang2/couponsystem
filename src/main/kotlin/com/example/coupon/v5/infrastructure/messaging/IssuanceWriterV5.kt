@@ -1,4 +1,4 @@
-package com.example.coupon.v4.infrastructure.messaging
+package com.example.coupon.v5.infrastructure.messaging
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.dao.DataIntegrityViolationException
@@ -8,9 +8,9 @@ private val log = KotlinLogging.logger {}
 
 @Component
 class IssuanceWriter(
-    private val issuanceTransactionalWriter: IssuanceTransactionalWriter,
+    private val issuanceTransactionalWriter: IssuanceTransactionalWriterV5,
 ) {
-    fun write(event: IssuanceRequested) {
+    fun write(event: IssuanceRequestedV5) {
         try {
             issuanceTransactionalWriter.insertAndIncrement(event)
         } catch (e: DataIntegrityViolationException) {

@@ -10,7 +10,7 @@ private val log = KotlinLogging.logger {}
 
 @Component
 class InMemoryIssuanceWorker(
-    private val inMemoryIssuanceQueue: InMemoryIssuanceQueue,
+    private val inMemoryIssuanceQueue: InMemoryIssuanceQueueV4,
     private val issuanceWriter: IssuanceWriter,
 ) {
     private lateinit var workerThread: Thread

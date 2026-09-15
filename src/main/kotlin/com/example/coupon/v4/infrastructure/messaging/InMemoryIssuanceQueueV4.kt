@@ -6,10 +6,10 @@ import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.TimeUnit
 
 @Component
-class InMemoryIssuanceQueue {
-    private val queue = LinkedBlockingQueue<IssuanceRequested>(CAPACITY)
+class InMemoryIssuanceQueueV4 {
+    private val queue = LinkedBlockingQueue<IssuanceRequestedV4>(CAPACITY)
 
-    fun enqueue(event: IssuanceRequested) {
+    fun enqueue(event: IssuanceRequestedV4) {
         if (!queue.offer(event)) {
             println("Ignoring event: $event")
             throw QueueFullException()
@@ -17,7 +17,7 @@ class InMemoryIssuanceQueue {
         println("Enqueuing queue: $queue")
     }
 
-    fun poll(): IssuanceRequested? = queue.poll(POLL_TIMEOUT_MS, TimeUnit.MILLISECONDS)
+    fun poll(): IssuanceRequestedV4? = queue.poll(POLL_TIMEOUT_MS, TimeUnit.MILLISECONDS)
 
     fun size(): Int = queue.size
 

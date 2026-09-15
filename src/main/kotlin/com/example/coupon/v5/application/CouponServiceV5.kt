@@ -1,4 +1,4 @@
-package com.example.coupon.v4.application
+package com.example.coupon.v5.application
 
 import com.example.coupon.dto.CreateCouponRequest
 import com.example.coupon.domain.Coupon
@@ -6,17 +6,17 @@ import com.example.coupon.domain.CouponRepository
 import com.example.coupon.domain.Issuance
 import com.example.coupon.support.CouponNotFoundException
 import com.example.coupon.support.NotStartedException
-import com.example.coupon.v4.infrastructure.messaging.InMemoryIssuanceQueueV4
-import com.example.coupon.v4.infrastructure.messaging.IssuanceRequestedV4
+import com.example.coupon.v5.infrastructure.messaging.IssuanceRequestedV5
 import jakarta.transaction.Transactional
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
-class CouponServiceV4(
+class CouponServiceV5(
     private val couponRepository: CouponRepository,
-    private val couponIssuerV4: CouponIssuerV4,
-    private val issuanceQueue: InMemoryIssuanceQueueV4,
+    private val couponIssuerV5: CouponIssuerV5,
+    private val eventPublisher: ApplicationEventPublisher
 ) {
     // 쿠폰 생성
     @Transactional
@@ -28,7 +28,7 @@ class CouponServiceV4(
             validityDays = request.validityDays,
             startsAt = request.startsAt,
         ))
-        couponIssuerV4.initStock(coupon.id!!, coupon.totalQuantity)
+        couponIssuerV5.initStock(coupon.id!!, coupon.totalQuantity)
         return coupon
     }
 
@@ -49,13 +49,13 @@ class CouponServiceV4(
         }
 
         // redis에 사용한 쿠폰 개수 적용
-        couponIssuerV4.tryIsusue(couponId, userId)
+        couponIssuerV5.tryIsusue(couponId, userId)
 
         val expiresAt = now.plusSeconds(coupon.validityDays.toLong())
 
 
-        issuanceQueue.enqueue(
-            IssuanceRequestedV4(
+        eventPublisher.publishEvent(
+            IssuanceRequestedV5(
                 couponId = couponId,
                 userId = userId,
                 issuedAt = now,
