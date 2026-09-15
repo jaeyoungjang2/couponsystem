@@ -62,7 +62,6 @@ class CouponServiceV5(
                 expiresAt = expiresAt,
             )
         )
-        println("enqueued issuance")
 
         return Issuance(
             userId = userId,

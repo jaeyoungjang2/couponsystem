@@ -4,7 +4,7 @@ import org.springframework.context.event.EventListener
 import org.springframework.scheduling.annotation.Async
 
 class IssuanceEventHandlerV5(
-    private val writer: IssuanceWriter,
+    private val writer: IssuanceWriterV5,
 ) {
     @Async(ISSUANCE_TASK_EXECUTOR)
     @EventListener

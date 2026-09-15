@@ -17,10 +17,10 @@ class AsyncIssuanceConfig {
         val executor = ThreadPoolTaskExecutor()
         executor.corePoolSize = 1
         executor.maxPoolSize = 1
-        executor.setQueueCapacity(10_000)
+        executor.queueCapacity = 10_000
         executor.setThreadNamePrefix("issuance-async-")
         executor.setWaitForTasksToCompleteOnShutdown(true)
-        executor.setAwaitTerminationSeconds(10)
+        executor.setAwaitTerminationSeconds(30)
         executor.initialize()
         return executor
     }
