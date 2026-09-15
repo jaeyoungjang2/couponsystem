@@ -1,4 +1,4 @@
-package com.example.coupon.api.dto
+package com.example.coupon.dto
 
 import java.time.LocalDateTime
 

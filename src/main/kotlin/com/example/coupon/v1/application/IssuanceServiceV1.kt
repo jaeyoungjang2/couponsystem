@@ -1,6 +1,6 @@
-package com.example.coupon.application
+package com.example.coupon.v1.application
 
-import com.example.coupon.api.dto.IssuanceResponse
+import com.example.coupon.dto.IssuanceResponse
 import com.example.coupon.domain.CouponRepository
 import com.example.coupon.domain.Issuance
 import com.example.coupon.domain.IssuanceRepository
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
-class IssuanceService(
+class IssuanceServiceV1(
     private val issuanceRepository: IssuanceRepository,
     private val couponRepository: CouponRepository,
 ) {

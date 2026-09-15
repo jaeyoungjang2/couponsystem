@@ -1,4 +1,4 @@
-package com.example.coupon.api.dto
+package com.example.coupon.dto
 
 import com.example.coupon.domain.Issuance
 import com.example.coupon.domain.IssuanceStatus
@@ -15,7 +15,7 @@ class IssuanceResponse(
     val usedAt: LocalDateTime?,
 ) {
     companion object {
-        fun from(issuance: Issuance): com.example.coupon.api.dto.IssuanceResponse = com.example.coupon.api.dto.IssuanceResponse(
+        fun from(issuance: Issuance): IssuanceResponse = IssuanceResponse(
             id = requireNotNull(issuance.id),
             userId = issuance.userId,
             couponId = issuance.couponId,

@@ -1,9 +1,8 @@
-package com.example.coupon.application
+package com.example.coupon.v1.application
 
-import com.example.coupon.api.dto.CreateCouponRequest
+import com.example.coupon.dto.CreateCouponRequest
 import com.example.coupon.domain.Coupon
 import com.example.coupon.domain.CouponRepository
-import com.example.coupon.api.dto.IssuanceResponse
 import com.example.coupon.domain.Issuance
 import com.example.coupon.domain.IssuanceRepository
 import com.example.coupon.support.AlreadyIssuedException
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
-class CouponService(
+class CouponServiceV1(
     private val couponRepository: CouponRepository,
     private val issuanceRepository: IssuanceRepository,
 ) {
