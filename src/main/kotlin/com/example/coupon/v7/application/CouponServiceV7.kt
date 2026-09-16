@@ -16,7 +16,7 @@ import java.time.LocalDateTime
 @Service
 class CouponServiceV7(
     private val couponRepository: CouponRepository,
-    private val cacheProperties: CacheProperties,
+    private val couponIssuePolicyReader: CouponIssuePolicyReader,
     private val cacheMetrics: CacheMetrics,
     private val couponIssuerV7: CouponIssuerV7,
     private val issuanceRequestProducer: IssuanceRequestProducer
@@ -38,23 +38,19 @@ class CouponServiceV7(
     // 쿠폰 발급
     @Transactional
     fun issue(couponId: Long, userId: Long): Issuance {
-        cacheMetrics.incrementCouponDbRead()
-        // db가 로컬에 있어서 조회 속도가 빨라서 임의로 느리게 조금 만들게 함 (100ms)
-//        Thread.sleep(cacheProperties.simulatedLoadLatencyMs)
-        val coupon = couponRepository.findById(couponId)
-            .orElseThrow { CouponNotFoundException() }
+        val policy = couponIssuePolicyReader.get(couponId)
 
         val now = LocalDateTime.now()
 
         // 쿠폰 발급이 가능한 시간인지 확인
-        if (!coupon.isBookingOpen(now)) {
+        if (!policy.isBookingOpen(now)) {
             throw NotStartedException()
         }
 
         // redis에 사용한 쿠폰 개수 적용
         couponIssuerV7.tryIsusue(couponId, userId)
 
-        val expiresAt = now.plusSeconds(coupon.validityDays.toLong())
+        val expiresAt = now.plusSeconds(policy.validityDays.toLong())
 
 
         issuanceRequestProducer.publish(
