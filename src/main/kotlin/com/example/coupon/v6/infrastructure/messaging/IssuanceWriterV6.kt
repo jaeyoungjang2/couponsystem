@@ -1,0 +1,20 @@
+package com.example.coupon.v6.infrastructure.messaging
+
+import io.github.oshai.kotlinlogging.KotlinLogging
+import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.stereotype.Component
+
+private val log = KotlinLogging.logger {}
+
+@Component
+class IssuanceWriterV6(
+    private val issuanceTransactionalWriter: IssuanceTransactionalWriterV6,
+) {
+    fun write(event: IssuanceRequestedV6) {
+        try {
+            issuanceTransactionalWriter.insertAndIncrement(event)
+        } catch (e: DataIntegrityViolationException) {
+            log.debug { "UNIQUE 위반은 멱등 처리: couponId=${event.couponId}, userId=${event.userId}" }
+        }
+    }
+}
