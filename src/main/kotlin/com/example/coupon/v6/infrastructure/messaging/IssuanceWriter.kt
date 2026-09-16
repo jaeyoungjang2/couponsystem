@@ -8,9 +8,9 @@ private val log = KotlinLogging.logger {}
 
 @Component
 class IssuanceWriterV6(
-    private val issuanceTransactionalWriter: IssuanceTransactionalWriterV6,
+    private val issuanceTransactionalWriter: IssuanceTransactionalWriter,
 ) {
-    fun write(event: IssuanceRequestedV6) {
+    fun write(event: IssuanceRequested) {
         try {
             issuanceTransactionalWriter.insertAndIncrement(event)
         } catch (e: DataIntegrityViolationException) {

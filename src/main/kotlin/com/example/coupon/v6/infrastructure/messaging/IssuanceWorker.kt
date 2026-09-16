@@ -1,10 +1,11 @@
 package com.example.coupon.v6.infrastructure.messaging
 
+import com.example.coupon.v6.infrastructure.messaging.IssuanceTopics
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
 
 @Component
-class IssuanceWorkerV6(
+class IssuanceWorker(
     private val writer: IssuanceWriterV6,
 ) {
     @KafkaListener(
@@ -12,7 +13,7 @@ class IssuanceWorkerV6(
         groupId = IssuanceTopics.CONSUMER_GROUP,
         concurrency = "3",
     )
-    fun consume(event: IssuanceRequestedV6) {
+    fun consume(event: IssuanceRequested) {
         writer.write(event)
     }
 }

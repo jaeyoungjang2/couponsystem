@@ -7,12 +7,12 @@ import jakarta.transaction.Transactional
 import org.springframework.stereotype.Component
 
 @Component
-class IssuanceTransactionalWriterV6(
+class IssuanceTransactionalWriter(
     private val issuanceRepository: IssuanceRepository,
     private val couponRepository: CouponRepository,
 ) {
     @Transactional
-    fun insertAndIncrement(event: IssuanceRequestedV6) {
+    fun insertAndIncrement(event: IssuanceRequested) {
         issuanceRepository.save(
             Issuance(
                 userId = event.userId,

@@ -1,5 +1,6 @@
 package com.example.coupon.v6.infrastructure.messaging
 
+import com.example.coupon.v6.infrastructure.messaging.IssuanceTopics
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
@@ -49,7 +50,7 @@ class KafkaConfig(
             ConsumerConfig.GROUP_ID_CONFIG to IssuanceTopics.CONSUMER_GROUP,
             ConsumerConfig.AUTO_OFFSET_RESET_CONFIG to "earliest",
         )
-        val jsonDelegate = JacksonJsonDeserializer(IssuanceRequestedV6::class.java, jsonMapper).apply {
+        val jsonDelegate = JacksonJsonDeserializer(IssuanceRequested::class.java, jsonMapper).apply {
             addTrustedPackages("com.apiece.coupon.infrastructure.messaging")
         }
         @Suppress("UNCHECKED_CAST")

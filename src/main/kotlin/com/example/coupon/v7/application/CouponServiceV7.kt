@@ -1,4 +1,4 @@
-package com.example.coupon.v6.application
+package com.example.coupon.v7.application
 
 import com.example.coupon.dto.CreateCouponRequest
 import com.example.coupon.domain.Coupon
@@ -8,14 +8,17 @@ import com.example.coupon.support.CouponNotFoundException
 import com.example.coupon.support.NotStartedException
 import com.example.coupon.v6.infrastructure.messaging.IssuanceRequestProducer
 import com.example.coupon.v6.infrastructure.messaging.IssuanceRequested
+import com.example.coupon.v7.infrastructure.cache.CacheProperties
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
-class CouponServiceV6(
+class CouponServiceV7(
     private val couponRepository: CouponRepository,
-    private val couponIssuerV6: CouponIssuerV6,
+    private val cacheProperties: CacheProperties,
+    private val cacheMetrics: CacheMetrics,
+    private val couponIssuerV7: CouponIssuerV7,
     private val issuanceRequestProducer: IssuanceRequestProducer
 ) {
     // 쿠폰 생성
@@ -28,16 +31,16 @@ class CouponServiceV6(
             validityDays = request.validityDays,
             startsAt = request.startsAt,
         ))
-        couponIssuerV6.initStock(coupon.id!!, coupon.totalQuantity)
+        couponIssuerV7.initStock(coupon.id!!, coupon.totalQuantity)
         return coupon
     }
 
     // 쿠폰 발급
     @Transactional
     fun issue(couponId: Long, userId: Long): Issuance {
-        // 존재하는 쿠폰인지 확인
-        // v2에서 비관적 락을 적용하던 부분을 개선하였다.
-        // 비관적 락으로 인해서 발생하던 락이 걸리는 임계 영역을 redis를 이용해서 범위를 줄임 -> 아직 따닥 문제가 발생하는 상황
+        cacheMetrics.incrementCouponDbRead()
+        // db가 로컬에 있어서 조회 속도가 빨라서 임의로 느리게 조금 만들게 함 (100ms)
+//        Thread.sleep(cacheProperties.simulatedLoadLatencyMs)
         val coupon = couponRepository.findById(couponId)
             .orElseThrow { CouponNotFoundException() }
 
@@ -49,7 +52,7 @@ class CouponServiceV6(
         }
 
         // redis에 사용한 쿠폰 개수 적용
-        couponIssuerV6.tryIsusue(couponId, userId)
+        couponIssuerV7.tryIsusue(couponId, userId)
 
         val expiresAt = now.plusSeconds(coupon.validityDays.toLong())
 

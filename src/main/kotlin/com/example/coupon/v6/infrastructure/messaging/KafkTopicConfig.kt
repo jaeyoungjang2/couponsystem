@@ -1,5 +1,6 @@
 package com.example.coupon.v6.infrastructure.messaging
 
+import com.example.coupon.v6.infrastructure.messaging.IssuanceTopics
 import org.apache.kafka.clients.admin.NewTopic
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
