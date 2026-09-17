@@ -33,7 +33,7 @@ class CouponServiceV9(
     }
 
     // 쿠폰 발급
-    @Transactional
+//    @Transactional
     fun issue(couponId: Long, userId: Long): Issuance {
         // 쿠폰 발급 정책 확인 (발급 시작 날짜, 유효 기간)
         val policy = couponIssuePolicyReader.get(couponId)
