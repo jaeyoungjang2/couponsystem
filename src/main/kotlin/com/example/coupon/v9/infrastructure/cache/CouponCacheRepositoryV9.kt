@@ -16,7 +16,6 @@ import java.util.UUID
 import java.time.Duration
 import java.time.Instant
 import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 
 private val log = KotlinLogging.logger {}
 
@@ -27,7 +26,7 @@ class CouponCacheRepositoryV9(
     private val properties: CacheProperties,
     private val cacheMetrics: CacheMetrics,
 ) {
-    private val backgrounExecutor = Executors.newFixedThreadPool(4) { r ->
+    private val backgroundExecutor = Executors.newFixedThreadPool(4) { r ->
         Thread(r, "coupon-cache-swr-refresh").apply { isDaemon = true }
     }
     private val lookupScript = listLuaScript("lua/cache-single-flight-swr.lua")
@@ -63,7 +62,7 @@ class CouponCacheRepositoryV9(
                 }
                 "STALE_REFRESH" -> {
                     cacheMetrics.incrementCouponCacheHit()
-                    backgrounExecutor.execute {
+                    backgroundExecutor.execute {
                         try {
                             fillCache(cacheKey, lockKey, token, loader)
                         } catch (e: Exception) {
@@ -110,7 +109,7 @@ class CouponCacheRepositoryV9(
 
     @PreDestroy
     fun shutdown() {
-        backgrounExecutor.shutdown()
+        backgroundExecutor.shutdown()
     }
 
     private companion object {

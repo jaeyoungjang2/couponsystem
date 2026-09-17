@@ -1,6 +1,5 @@
 package com.example.coupon.v9.application
 
-import com.example.coupon.common.CacheMetrics
 import com.example.coupon.domain.Coupon
 import com.example.coupon.domain.CouponRepository
 import com.example.coupon.domain.Issuance
@@ -47,9 +46,9 @@ class CouponServiceV9(
         }
 
         // redis에 사용한 쿠폰 개수 적용
-        couponIssuerV8.tryIsusue(couponId, userId)
+        couponIssuerV8.tryIssue(couponId, userId)
 
-        val expiresAt = now.plusSeconds(policy.validityDays.toLong())
+        val expiresAt = now.plusDays(policy.validityDays.toLong())
 
 
         issuanceRequestProducer.publish(

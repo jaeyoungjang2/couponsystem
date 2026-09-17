@@ -16,7 +16,7 @@ class CouponIssuerV3(
         Long::class.java,
     )
 
-    fun tryIsusue(couponId: Long) {
+    fun tryIssue(couponId: Long) {
         val raw = redisTemplate.execute(
             script,
             listOf(stockKey(couponId)),

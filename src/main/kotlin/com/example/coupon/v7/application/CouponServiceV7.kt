@@ -45,9 +45,9 @@ class CouponServiceV7(
         }
 
         // redis에 사용한 쿠폰 개수 적용
-        couponIssuerV7.tryIsusue(couponId, userId)
+        couponIssuerV7.tryIssue(couponId, userId)
 
-        val expiresAt = now.plusSeconds(policy.validityDays.toLong())
+        val expiresAt = now.plusDays(policy.validityDays.toLong())
 
 
         issuanceRequestProducer.publish(

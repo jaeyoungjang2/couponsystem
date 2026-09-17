@@ -49,7 +49,7 @@ class CouponServiceV5(
         }
 
         // redis에 사용한 쿠폰 개수 적용
-        couponIssuerV5.tryIsusue(couponId, userId)
+        couponIssuerV5.tryIssue(couponId, userId)
 
         val expiresAt = now.plusSeconds(coupon.validityDays.toLong())
 

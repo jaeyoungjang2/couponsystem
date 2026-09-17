@@ -60,7 +60,7 @@ class CouponServiceV3(
         }
 
         // redis에 사용한 쿠폰 개수 적용
-        couponIssuerV3.tryIsusue(couponId)
+        couponIssuerV3.tryIssue(couponId)
 
         couponRepository.incrementIssuedQuantity(couponId)
 

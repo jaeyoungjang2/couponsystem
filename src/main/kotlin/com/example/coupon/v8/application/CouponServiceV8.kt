@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 class CouponServiceV8(
     private val couponRepository: CouponRepository,
     private val couponIssuePolicyReader: CouponIssuePolicyReaderV8,
-    private val cacheMetrics: CacheMetrics,
     private val couponIssuerV8: CouponIssuerV8,
     private val issuanceRequestProducer: IssuanceRequestProducer
 ) {
@@ -48,9 +47,9 @@ class CouponServiceV8(
         }
 
         // redis에 사용한 쿠폰 개수 적용
-        couponIssuerV8.tryIsusue(couponId, userId)
+        couponIssuerV8.tryIssue(couponId, userId)
 
-        val expiresAt = now.plusSeconds(policy.validityDays.toLong())
+        val expiresAt = now.plusDays(policy.validityDays.toLong())
 
 
         issuanceRequestProducer.publish(
