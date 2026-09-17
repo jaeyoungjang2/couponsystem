@@ -1,4 +1,4 @@
-package com.example.coupon.v8.infrastructure.cache
+package com.example.coupon.common
 
 import org.springframework.core.io.ClassPathResource
 import org.springframework.data.redis.core.StringRedisTemplate

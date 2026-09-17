@@ -1,4 +1,4 @@
-package com.example.coupon.v8.application
+package com.example.coupon.v9.application
 
 import com.example.coupon.common.CacheMetrics
 import com.example.coupon.domain.Coupon
@@ -13,11 +13,10 @@ import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
-class CouponServiceV8(
+class CouponServiceV9(
     private val couponRepository: CouponRepository,
-    private val couponIssuePolicyReader: CouponIssuePolicyReaderV8,
-    private val cacheMetrics: CacheMetrics,
-    private val couponIssuerV8: CouponIssuerV8,
+    private val couponIssuePolicyReader: CouponIssuePolicyReaderV9,
+    private val couponIssuerV8: CouponIssuerV9,
     private val issuanceRequestProducer: IssuanceRequestProducer
 ) {
     // 쿠폰 생성

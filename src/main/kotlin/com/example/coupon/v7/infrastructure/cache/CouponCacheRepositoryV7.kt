@@ -34,7 +34,7 @@ class CouponCacheRepositoryV7(
         }
         cacheMetrics.incrementCouponDbRead()
         val response = loader()
-        redis.opsForValue().set(key, mapper.writeValueAsString(response), Duration.ofMinutes(properties.ttlMs))
+        redis.opsForValue().set(key, mapper.writeValueAsString(response), Duration.ofMillis(properties.ttlMs))
         return response
     }
 }

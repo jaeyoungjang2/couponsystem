@@ -1,4 +1,4 @@
-package com.example.coupon.v8.api.dto
+package com.example.coupon.dto
 
 import com.example.coupon.common.CacheMetricsSnapshot
 

@@ -1,6 +1,6 @@
 package com.example.coupon.common
 
-import com.example.coupon.v7.api.dto.CacheMetricsResponse
+import com.example.coupon.dto.CacheMetricsResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
