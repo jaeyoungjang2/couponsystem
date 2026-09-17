@@ -1,4 +1,4 @@
-package com.example.coupon.v7.application
+package com.example.coupon.common
 
 import org.springframework.stereotype.Component
 import java.util.concurrent.atomic.AtomicLong

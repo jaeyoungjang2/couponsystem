@@ -1,5 +1,6 @@
-package com.example.coupon.v7.application
+package com.example.coupon.v8.application
 
+import com.example.coupon.common.CacheMetrics
 import com.example.coupon.domain.Coupon
 import com.example.coupon.domain.CouponRepository
 import com.example.coupon.domain.Issuance
@@ -12,10 +13,11 @@ import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
-class CouponServiceV7(
+class CouponServiceV8(
     private val couponRepository: CouponRepository,
-    private val couponIssuePolicyReader: CouponIssuePolicyReaderV7,
-    private val couponIssuerV7: CouponIssuerV7,
+    private val couponIssuePolicyReader: CouponIssuePolicyReaderV8,
+    private val cacheMetrics: CacheMetrics,
+    private val couponIssuerV8: CouponIssuerV8,
     private val issuanceRequestProducer: IssuanceRequestProducer
 ) {
     // 쿠폰 생성
@@ -28,7 +30,7 @@ class CouponServiceV7(
             validityDays = request.validityDays,
             startsAt = request.startsAt,
         ))
-        couponIssuerV7.initStock(coupon.id!!, coupon.totalQuantity)
+        couponIssuerV8.initStock(coupon.id!!, coupon.totalQuantity)
         return coupon
     }
 
@@ -45,7 +47,7 @@ class CouponServiceV7(
         }
 
         // redis에 사용한 쿠폰 개수 적용
-        couponIssuerV7.tryIsusue(couponId, userId)
+        couponIssuerV8.tryIsusue(couponId, userId)
 
         val expiresAt = now.plusSeconds(policy.validityDays.toLong())
 

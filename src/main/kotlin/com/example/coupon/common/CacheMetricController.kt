@@ -1,7 +1,6 @@
-package com.example.coupon.v7.api
+package com.example.coupon.common
 
 import com.example.coupon.v7.api.dto.CacheMetricsResponse
-import com.example.coupon.v7.application.CacheMetrics
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -14,7 +13,7 @@ class CacheMetricController(
 ) {
 
     @GetMapping
-    fun snapshot(): CacheMetricsResponse = CacheMetricsResponse.from(cacheMetrics.snapshot())
+    fun snapshot(): CacheMetricsResponse = CacheMetricsResponse.Companion.from(cacheMetrics.snapshot())
 
     @PostMapping("/reset")
     fun reset() {
