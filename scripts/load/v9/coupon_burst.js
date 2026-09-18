@@ -22,7 +22,7 @@ export const options = {
   scenarios: {
     issue_policy_burst: {
       executor: 'constant-arrival-rate',
-      rate: 500, timeUnit: '1s', duration: '30s',  // 500 req/s × 30s = 15,000 회
+      rate: 500, timeUnit: '1s', duration: '180s',  // 500 req/s × 30s = 15,000 회
       preAllocatedVUs: 500, maxVUs: 1000,
     },
   },
