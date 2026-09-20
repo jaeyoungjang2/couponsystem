@@ -28,6 +28,8 @@ dependencies {
 	implementation("tools.jackson.module:jackson-module-kotlin")
 	// 코틀린 로깅 라이브러리
 	implementation("io.github.oshai:kotlin-logging-jvm:7.0.7")
+	// sordoutstate의 in-precess fast-path 캐시.
+	implementation("com.github.ben-manes.caffeine:caffeine:3.1.8")
 	// 모니터링 설정 추가
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	runtimeOnly("io.micrometer:micrometer-registry-prometheus")
