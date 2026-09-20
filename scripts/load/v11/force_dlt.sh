@@ -25,7 +25,7 @@ for i in $(seq 1 "$COUNT"); do
 done
 
 if [[ "$(redis_cli SISMEMBER "coupon:$COUPON_ID:users" "${user_ids[0]}")" == "1" ]]; then
-  printf '\033[1;33m  이미 주입된 쿠폰입니다. 먼저 ./scripts/load/reset.sh 로 초기화한 뒤 다시 실행하세요.\033[0m\n'
+  printf '\033[1;33m  이미 주입된 쿠폰입니다. 먼저 ./scripts/load/v11/reset.sh 로 초기화한 뒤 다시 실행하세요.\033[0m\n'
   exit 1
 fi
 

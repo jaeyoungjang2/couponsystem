@@ -1,10 +1,11 @@
-package com.example.coupon.v9.application
+package com.example.coupon.v11.application
 
 import com.example.coupon.domain.Coupon
 import com.example.coupon.domain.CouponRepository
 import com.example.coupon.domain.Issuance
 import com.example.coupon.dto.CreateCouponRequest
 import com.example.coupon.support.NotStartedException
+import com.example.coupon.support.SoldOutException
 import com.example.coupon.v6.infrastructure.messaging.IssuanceRequestProducer
 import com.example.coupon.v6.infrastructure.messaging.IssuanceRequested
 import org.springframework.transaction.annotation.Transactional
@@ -12,11 +13,12 @@ import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
-class CouponServiceV9(
+class CouponServiceV11(
     private val couponRepository: CouponRepository,
-    private val couponIssuePolicyReader: CouponIssuePolicyReaderV9,
-    private val couponIssuerV8: CouponIssuerV9,
-    private val issuanceRequestProducer: IssuanceRequestProducer
+    private val couponIssuePolicyReader: CouponIssuePolicyReaderV11,
+    private val couponIssuer: CouponIssuerV11,
+    private val issuanceRequestProducer: IssuanceRequestProducer,
+    private val soldOutState: SoldOutState,
 ) {
     // 쿠폰 생성
     @Transactional
@@ -28,13 +30,16 @@ class CouponServiceV9(
             validityDays = request.validityDays,
             startsAt = request.startsAt,
         ))
-        couponIssuerV8.initStock(coupon.id!!, coupon.totalQuantity)
+        couponIssuer.initStock(coupon.id!!, coupon.totalQuantity)
         return coupon
     }
 
     // 쿠폰 발급
 //    @Transactional
     fun issue(couponId: Long, userId: Long): Issuance {
+        if (soldOutState.isSoldOut(couponId)) {
+            throw SoldOutException()
+        }
         // 쿠폰 발급 정책 확인 (발급 시작 날짜, 유효 기간)
         val policy = couponIssuePolicyReader.get(couponId)
 
@@ -46,7 +51,7 @@ class CouponServiceV9(
         }
 
         // redis에 사용한 쿠폰 개수 적용
-        couponIssuerV8.tryIssue(couponId, userId)
+        couponIssuer.tryIssue(couponId, userId)
 
         val expiresAt = now.plusDays(policy.validityDays.toLong())
 

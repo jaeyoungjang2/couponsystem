@@ -8,7 +8,7 @@ import com.example.coupon.domain.IssuanceStatus
 import com.example.coupon.support.AlreadyUsedException
 import com.example.coupon.support.ExpiredException
 import com.example.coupon.support.IssuanceNotFoundException
-import jakarta.transaction.Transactional
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 

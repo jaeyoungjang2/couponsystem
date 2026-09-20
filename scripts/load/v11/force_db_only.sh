@@ -21,7 +21,7 @@ for i in $(seq 1 "$COUNT"); do
   values+="($uid, $COUPON_ID, 'ISSUED', NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY))"
 done
 if [[ "$(mysql_exec "SELECT COUNT(*) FROM issuance WHERE coupon_id = $COUPON_ID AND user_id BETWEEN $first AND $last")" != "0" ]]; then
-  printf '\033[1;33m  이미 주입된 쿠폰입니다. 먼저 ./scripts/load/reset.sh 로 초기화한 뒤 다시 실행하세요.\033[0m\n'
+  printf '\033[1;33m  이미 주입된 쿠폰입니다. 먼저 ./scripts/load/v11/reset.sh 로 초기화한 뒤 다시 실행하세요.\033[0m\n'
   exit 1
 fi
 

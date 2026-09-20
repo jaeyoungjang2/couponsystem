@@ -1,4 +1,4 @@
-package com.example.coupon.v10.infrastructure.cache
+package com.example.coupon.v11.infrastructure.cache
 
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.stereotype.Repository

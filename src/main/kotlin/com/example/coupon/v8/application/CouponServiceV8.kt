@@ -8,7 +8,7 @@ import com.example.coupon.dto.CreateCouponRequest
 import com.example.coupon.support.NotStartedException
 import com.example.coupon.v6.infrastructure.messaging.IssuanceRequestProducer
 import com.example.coupon.v6.infrastructure.messaging.IssuanceRequested
-import jakarta.transaction.Transactional
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 

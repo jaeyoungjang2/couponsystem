@@ -7,7 +7,7 @@ import com.example.coupon.domain.Issuance
 import com.example.coupon.support.CouponNotFoundException
 import com.example.coupon.support.NotStartedException
 import com.example.coupon.v5.infrastructure.messaging.IssuanceRequestedV5
-import jakarta.transaction.Transactional
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime

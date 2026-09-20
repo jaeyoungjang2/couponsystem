@@ -3,7 +3,7 @@ package com.example.coupon.v5.infrastructure.messaging
 import com.example.coupon.domain.CouponRepository
 import com.example.coupon.domain.Issuance
 import com.example.coupon.domain.IssuanceRepository
-import jakarta.transaction.Transactional
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.stereotype.Component
 
 @Component

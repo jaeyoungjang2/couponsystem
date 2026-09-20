@@ -1,15 +1,13 @@
-package com.example.coupon.v10.application
+package com.example.coupon.v11.application
 
 import com.example.coupon.support.AlreadyIssuedException
 import com.example.coupon.support.SoldOutException
-import com.example.coupon.v10.infrastructure.cache.IssuanceRedisRepositoryV10
-import org.springframework.core.io.ClassPathResource
+import com.example.coupon.v11.infrastructure.cache.IssuanceRedisRepositoryV10
 import org.springframework.data.redis.core.StringRedisTemplate
-import org.springframework.data.redis.core.script.RedisScript
 import org.springframework.stereotype.Component
 
 @Component
-class CouponIssuerV10(
+class CouponIssuerV11(
     private val redisTemplate: StringRedisTemplate,
     private val issuanceRedisRepository: IssuanceRedisRepositoryV10,
 ) {

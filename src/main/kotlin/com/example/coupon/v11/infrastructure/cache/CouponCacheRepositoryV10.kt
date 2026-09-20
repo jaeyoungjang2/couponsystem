@@ -1,4 +1,4 @@
-package com.example.coupon.v10.infrastructure.cache
+package com.example.coupon.v11.infrastructure.cache
 
 import com.example.coupon.common.CacheProperties
 import com.example.coupon.common.CacheMetrics

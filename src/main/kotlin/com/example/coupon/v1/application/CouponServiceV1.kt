@@ -9,7 +9,7 @@ import com.example.coupon.support.AlreadyIssuedException
 import com.example.coupon.support.CouponNotFoundException
 import com.example.coupon.support.NotStartedException
 import com.example.coupon.support.SoldOutException
-import jakarta.transaction.Transactional
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
