@@ -14,16 +14,18 @@ wait_service_ready() {
 
 restart_service() {
   docker compose up -d --force-recreate kafka >/dev/null 2>&1
+
   for _ in $(seq 1 40); do
     [[ "$(docker compose ps kafka --format '{{.Status}}' 2>/dev/null || true)" == *healthy* ]] && break
     sleep 1
   done
-  if [[ -n "${1:-}" ]]; then
-    COUPON_RECONCILE_INTERVAL_MS="$1" docker compose up -d --force-recreate coupon-service >/dev/null
-  else
-    docker compose restart coupon-service >/dev/null
-  fi
-  wait_service_ready || { printf 'coupon-service 재기동 실패\n' >&2; exit 1; }
+
+  printf 'coupon-service는 로컬에서 실행 중이므로 재시작을 생략합니다.\n'
+
+  wait_service_ready || {
+    printf 'coupon-service 연결 실패\n' >&2
+    exit 1
+  }
 }
 
 fail=0
