@@ -16,7 +16,7 @@ import java.time.LocalDateTime
 class CouponServiceV10(
     private val couponRepository: CouponRepository,
     private val couponIssuePolicyReader: CouponIssuePolicyReaderV10,
-    private val couponIssuerV8: CouponIssuerV10,
+    private val couponIssuer: CouponIssuerV10,
     private val issuanceRequestProducer: IssuanceRequestProducer,
     private val soldOutState: SoldOutState,
 ) {
@@ -30,7 +30,7 @@ class CouponServiceV10(
             validityDays = request.validityDays,
             startsAt = request.startsAt,
         ))
-        couponIssuerV8.initStock(coupon.id!!, coupon.totalQuantity)
+        couponIssuer.initStock(coupon.id!!, coupon.totalQuantity)
         return coupon
     }
 
@@ -51,7 +51,7 @@ class CouponServiceV10(
         }
 
         // redis에 사용한 쿠폰 개수 적용
-        couponIssuerV8.tryIssue(couponId, userId)
+        couponIssuer.tryIssue(couponId, userId)
 
         val expiresAt = now.plusDays(policy.validityDays.toLong())
 

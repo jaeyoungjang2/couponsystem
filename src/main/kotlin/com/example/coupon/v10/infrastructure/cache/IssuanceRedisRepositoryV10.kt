@@ -11,14 +11,14 @@ class IssuanceRedisRepositoryV10(
     private val soldOutProperties: SoldOutProperties,
 ) {
 
-    private val issueScript = longLuaScript("lua/issueV4.lua")
+    private val issueScript = longLuaScript("lua/issueV10.lua")
 
     fun tryIssue(couponId: Long, userId: Long): Long =
 
         // 반환: 1=성공, 0=매진, -1=중복 발급
         redis.runForLong(
             issueScript,
-            listOf("coupon:$couponId:stock", "coupon:$couponId:users", "coupon:$couponId:sourd_out"),
+            listOf("coupon:$couponId:stock", "coupon:$couponId:users", "coupon:$couponId:sold_out"),
             userId, soldOutProperties.ttlSeconds,
         )
 }
