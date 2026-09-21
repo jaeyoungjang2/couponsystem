@@ -20,7 +20,7 @@ import java.util.concurrent.Executors
 private val log = KotlinLogging.logger {}
 
 @Repository
-class CouponCacheRepositoryV10(
+class CouponCacheRepositoryV11(
     private val redis: StringRedisTemplate,
     private val mapper: ObjectMapper,
     private val properties: CacheProperties,

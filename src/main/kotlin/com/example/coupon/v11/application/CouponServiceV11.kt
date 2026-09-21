@@ -6,6 +6,7 @@ import com.example.coupon.domain.Issuance
 import com.example.coupon.dto.CreateCouponRequest
 import com.example.coupon.support.NotStartedException
 import com.example.coupon.support.SoldOutException
+import com.example.coupon.v10.infrastructure.cache.SoldOutState
 import com.example.coupon.v6.infrastructure.messaging.IssuanceRequestProducer
 import com.example.coupon.v6.infrastructure.messaging.IssuanceRequested
 import org.springframework.transaction.annotation.Transactional

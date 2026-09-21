@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 private val log = KotlinLogging.logger {}
 
 @Component
-class IssuanceWriter(
+class IssuanceWriterV4(
     private val issuanceTransactionalWriter: IssuanceTransactionalWriterV4,
 ) {
     fun write(event: IssuanceRequestedV4) {

@@ -2,6 +2,7 @@ package com.example.coupon.v11.infrastructure.cache
 
 import com.example.coupon.common.longLuaScript
 import com.example.coupon.common.runForLong
+import com.example.coupon.v10.infrastructure.cache.SoldOutProperties
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.stereotype.Repository
 
