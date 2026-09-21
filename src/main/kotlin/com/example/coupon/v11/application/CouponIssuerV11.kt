@@ -2,14 +2,14 @@ package com.example.coupon.v11.application
 
 import com.example.coupon.support.AlreadyIssuedException
 import com.example.coupon.support.SoldOutException
-import com.example.coupon.v11.infrastructure.cache.IssuanceRedisRepositoryV10
+import com.example.coupon.v11.infrastructure.cache.IssuanceRedisRepositoryV11
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.stereotype.Component
 
 @Component
 class CouponIssuerV11(
     private val redisTemplate: StringRedisTemplate,
-    private val issuanceRedisRepository: IssuanceRedisRepositoryV10,
+    private val issuanceRedisRepository: IssuanceRedisRepositoryV11,
 ) {
 
 

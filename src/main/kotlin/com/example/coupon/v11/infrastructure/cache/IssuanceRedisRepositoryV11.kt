@@ -6,7 +6,7 @@ import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.stereotype.Repository
 
 @Repository
-class IssuanceRedisRepositoryV10(
+class IssuanceRedisRepositoryV11(
     private val redis: StringRedisTemplate,
     private val soldOutProperties: SoldOutProperties,
 ) {

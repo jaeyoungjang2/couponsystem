@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
-class CouponService(
+class CouponServiceV11(
     private val couponRepository: CouponRepository,
     private val couponIssuePolicyReader: CouponIssuePolicyReaderV11,
     private val couponIssuer: CouponIssuerV11,
