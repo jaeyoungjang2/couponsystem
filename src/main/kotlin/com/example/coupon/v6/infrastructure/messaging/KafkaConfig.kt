@@ -36,6 +36,8 @@ class KafkaConfig(
     fun producerFactory(): ProducerFactory<String, Any> {
         val props = mapOf<String, Any>(
             ProducerConfig.BOOTSTRAP_SERVERS_CONFIG to bootstrapServers,
+
+
             ProducerConfig.ACKS_CONFIG to "1",
         )
         return DefaultKafkaProducerFactory(props, StringSerializer(), JacksonJsonSerializer<Any>(jsonMapper))
