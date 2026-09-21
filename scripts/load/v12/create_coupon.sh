@@ -4,7 +4,7 @@
 # 명령 실패 / 미정의 변수 / 파이프 중간 실패 시 즉시 종료
 set -euo pipefail
 
-curl -fsS -X POST http://localhost:8080/api/v11/coupons \
+curl -fsS -X POST http://localhost:8080/api/v12/coupons \
   -H 'Content-Type: application/json' \
   -d '{"name":"load test","totalQuantity":5000,"validityDays":7}' \
   | jq -r '.id'
