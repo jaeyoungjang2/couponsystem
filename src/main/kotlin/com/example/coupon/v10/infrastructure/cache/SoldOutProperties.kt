@@ -1,4 +1,4 @@
-package com.example.coupon.v11.infrastructure.cache
+package com.example.coupon.v10.infrastructure.cache
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 

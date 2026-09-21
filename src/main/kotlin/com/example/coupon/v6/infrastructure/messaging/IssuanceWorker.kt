@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class IssuanceWorker(
-    private val writer: IssuanceWriterV6,
+    private val writer: IssuanceWriter,
 ) {
     @KafkaListener(
         topics = [IssuanceTopics.REQUESTED],

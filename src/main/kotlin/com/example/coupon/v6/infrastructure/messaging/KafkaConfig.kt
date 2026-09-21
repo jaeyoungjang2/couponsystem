@@ -53,7 +53,7 @@ class KafkaConfig(
             ConsumerConfig.AUTO_OFFSET_RESET_CONFIG to "earliest",
         )
         val jsonDelegate = JacksonJsonDeserializer(IssuanceRequested::class.java, jsonMapper).apply {
-            addTrustedPackages("\"com.example.coupon.v6.infrastructure.messaging\"")
+            addTrustedPackages("com.example.coupon.v6.infrastructure.messaging")
         }
         @Suppress("UNCHECKED_CAST")
         val valueDeserializer = ErrorHandlingDeserializer(jsonDelegate) as ErrorHandlingDeserializer<Any>

@@ -1,7 +1,8 @@
-package com.example.coupon.v11.application
+package com.example.coupon.v10.application
 
 import com.example.coupon.common.CacheMetrics
-import com.example.coupon.v11.infrastructure.cache.SoldOutRedisRepositoryV11
+import com.example.coupon.v10.infrastructure.cache.SoldOutProperties
+import com.example.coupon.v10.infrastructure.cache.SoldOutRedisRepositoryV10
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.github.benmanes.caffeine.cache.LoadingCache
 import org.springframework.stereotype.Component
@@ -9,7 +10,7 @@ import java.time.Duration
 
 @Component
 class SoldOutState(
-    private val soldOutRedisRepository: SoldOutRedisRepositoryV11,
+    private val soldOutRedisRepository: SoldOutRedisRepositoryV10,
     private val cacheMetrics: CacheMetrics,
     properties: SoldOutProperties,
 ) {
