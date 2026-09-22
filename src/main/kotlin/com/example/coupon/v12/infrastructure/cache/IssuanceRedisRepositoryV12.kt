@@ -12,7 +12,7 @@ class IssuanceRedisRepositoryV12(
     private val soldOutProperties: SoldOutProperties,
 ) {
 
-    private val issueScript = longLuaScript("lua/issue.lua")
+    private val issueScript = longLuaScript("lua/issueV12.lua")
 
     fun tryIssue(couponId: Long, userId: Long): Long =
         redisTemplate.runForLong(

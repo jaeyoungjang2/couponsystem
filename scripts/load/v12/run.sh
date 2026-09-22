@@ -53,7 +53,7 @@ reconcile() {
   printf '\n\033[1;35m##### 최근 대사 대상 등록 #####\033[0m\n'
   ./scripts/load/v12/reset.sh >/dev/null
   cid="$(./scripts/load/v12/create_coupon.sh)"
-  curl -fsS -X POST "$BASE/api/coupons/$cid/issue" -H 'X-User-Id: 800001' >/dev/null
+  curl -fsS -X POST "$BASE/api/v12/coupons/$cid/issue" -H 'X-User-Id: 800001' >/dev/null
   [[ -n "$(redis_cli ZSCORE coupon:reconcile:recent "$cid")" ]] && pass "발급 쿠폰을 최근 대사 대상으로 등록" || ng "발급 쿠폰을 최근 대사 대상으로 등록"
   for _ in $(seq 1 30); do
     [[ "$(mysql_scalar "SELECT COUNT(*) FROM issuance WHERE coupon_id=$cid AND user_id=800001")" == "1" ]] && break
