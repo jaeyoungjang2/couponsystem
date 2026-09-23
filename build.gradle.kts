@@ -32,6 +32,9 @@ dependencies {
 	implementation("com.github.ben-manes.caffeine:caffeine:3.1.8")
 	// 모니터링 설정 추가
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	// 배출 타이머를 여러 서버 중 한 대만 돌리게 하는 분산 락. 저장소는 쓰던 Redis 재사용.
+	implementation("net.javacrumbs.shedlock:shedlock-spring:6.6.0")
+	implementation("net.javacrumbs.shedlock:shedlock-provider-redis-spring:6.6.0")
 	runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 	runtimeOnly("com.mysql:mysql-connector-j")
 	testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
