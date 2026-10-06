@@ -1,6 +1,6 @@
 package com.example.coupon.v13.application
 
-import com.apiece.coupon.support.WaitingRoomNotEnteredException
+import com.example.coupon.support.WaitingRoomNotEnteredException
 import com.example.coupon.v13.infrastructure.cache.WaitingRoomProperties
 import com.example.coupon.v13.infrastructure.cache.WaitingRoomRedisRepository
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock
@@ -31,6 +31,7 @@ class RedisWaitingRoom(
 
     // 배출 타이머. ShedLock 으로 매초 한 대만 돈다 (안 그러면 통과 속도가 서버 수만큼 곱해진다).
     @Scheduled(fixedRate = 1000)
+    // 작업이 빨리 끝나도 최소 0.95초 동안 락을 유지
     @SchedulerLock(name = "waiting-room-drain", lockAtLeastFor = "PT0.95S")
     fun drain() {
         waitingRoomRedisRepository.activeRooms().forEach { couponId ->

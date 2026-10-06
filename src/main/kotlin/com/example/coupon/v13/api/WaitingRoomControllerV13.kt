@@ -1,15 +1,8 @@
 package com.example.coupon.v13.api
 
-import com.apiece.coupon.api.dto.WaitingRoomResponse
-import com.apiece.coupon.application.WaitingRoom
 import com.example.coupon.v13.api.dto.WaitingRoomResponse
 import com.example.coupon.v13.application.WaitingRoom
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/waiting-room")

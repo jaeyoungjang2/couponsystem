@@ -4,11 +4,10 @@ import com.example.coupon.domain.Coupon
 import com.example.coupon.domain.CouponRepository
 import com.example.coupon.domain.Issuance
 import com.example.coupon.dto.CreateCouponRequest
+import com.example.coupon.infrastructure.cache.SoldOutState
 import com.example.coupon.support.NotStartedException
 import com.example.coupon.support.SoldOutException
-import com.example.coupon.infrastructure.cache.SoldOutState
 import com.example.coupon.v10.application.CouponIssuePolicyReaderV10
-import com.example.coupon.v10.application.CouponIssuerV10
 import com.example.coupon.v6.infrastructure.messaging.IssuanceRequestProducer
 import com.example.coupon.v6.infrastructure.messaging.IssuanceRequested
 import jakarta.transaction.Transactional

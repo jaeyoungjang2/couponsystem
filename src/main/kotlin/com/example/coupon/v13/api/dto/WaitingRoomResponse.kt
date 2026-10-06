@@ -1,6 +1,6 @@
 package com.example.coupon.v13.api.dto
 
-import com.apiece.coupon.application.Admission
+import com.example.coupon.v13.application.Admission
 
 class WaitingRoomResponse(
     val admitted: Boolean,

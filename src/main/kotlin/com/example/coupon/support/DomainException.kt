@@ -1,4 +1,4 @@
-package com.apiece.coupon.support
+package com.example.coupon.support
 
 import org.springframework.http.HttpStatus
 
